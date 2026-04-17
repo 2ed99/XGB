@@ -85,7 +85,7 @@ input_data['Education'] = st.selectbox(
     "教育水平",
     options=[1,2,3,4,5,6],
     format_func=lambda x: {
-        1:"未上过学",2:"小学",3:"初中",4:"高中",5:"大专",6:"本科及以上"
+        1:"小学以下",2:"小学",3:"初中",4:"高中",5:"大专",6:"本科及以上"
     }[x]
 )
 input_data['Income'] = st.selectbox(
@@ -181,7 +181,7 @@ if st.button("一键预测", type="primary"):
         
         # 模型预测
         prob = model.predict_proba(sample)[0, 1]
-
+        prediction = 1 if prob >= 0.5 else 0
         # ==========================================
         # 展示预测结果 【修改2：排版居中、文字描述和参考图对齐】
         # ==========================================
@@ -189,7 +189,7 @@ if st.button("一键预测", type="primary"):
         st.subheader("预测结果")
         
         # 文字说明 + 概率展示，和参考图文案风格统一
-        st.write(f"**预测类别：{prob} (0=不患有糖尿病, 1=患有糖尿病)**")
+        st.write(f"**预测类别：{prediction} (0=不患有糖尿病, 1=患有糖尿病)**")
         st.write(f"**预测概率：不患有糖尿病:{1-prob:.3f}，高风险:{prob:.3f}**")
         if prob < 0.5:
             st.info(f"根据模型判断，您目前糖尿病患病风险较低，无病概率为 **{(1-prob)*100:.1f}%**，请保持健康作息、定期体检。")
