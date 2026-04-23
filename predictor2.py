@@ -229,7 +229,7 @@ if st.button("一键预测", type="primary"):
         lime_explainer = lime.lime_tabular.LimeTabularExplainer(
             training_data=np.array(X_test),
             feature_names=FEATURE_NAMES,
-            class_names=['低风险', '高风险'],
+            class_names=['No Diabetes', 'Diabetes'],
             mode='classification',
             random_state=42
         )
